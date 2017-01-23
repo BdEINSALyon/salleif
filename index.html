@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="flipclock.css">
+		<meta http-equiv = "refresh" content="15000"/>
+		<script src="jquery.min.js"></script>
+
+		<script src="flipclock.js"></script>		
+		
+		<style>
+			body {
+				background-color: F2F2F2;
+			}
+			
+			#logo{
+				margin-top:50px;
+			}
+			
+			.compteur{
+				width:650px !important;
+				left:50%;
+				display:block;
+				position:absolute;
+				bottom:100px;
+			}
+			
+			.clock{
+				position: relative; 
+				left: -50%;
+			}
+			
+			.h1{
+			font-family:sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<p align="center"><img src="image.png" height="700px" id="logo"></p>
+		
+		<div align="center" class="compteur">
+			<div class="clock"></div>
+		</div>
+		<script type="text/javascript">
+			var clock;
+			
+			$(document).ready(function() {
+				// Set dates.
+				var futureDate  = new Date("January 29, 2017 19:00:00");
+				console.log(futureDate);
+				var currentDate = new Date();
+				console.log(currentDate);
+
+				// Calculate the difference in seconds between the future and current date
+				var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+
+				// Calculate day difference and apply class to .clock for extra digit styling.
+				function dayDiff(first, second) {
+					return (second-first)/(1000*60*60*24);
+				}
+
+				if (dayDiff(currentDate, futureDate) < 100) {
+					$('.clock').addClass('twoDayDigits');
+				} else {
+					$('.clock').addClass('threeDayDigits');
+				}
+
+				if(diff < 0) {
+					diff = 0;
+				}
+
+				// Instantiate a coutdown FlipClock
+				clock = $('.clock').FlipClock(diff, {
+					clockFace: 'DailyCounter',
+					countdown: true,
+					language: "French"
+				});
+			});
+		</script>
+		
+	</body>
+</html>
